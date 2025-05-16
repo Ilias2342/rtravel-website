@@ -1,29 +1,47 @@
+"use client"
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { VehiclesGrid } from "@/components/vehicles-grid"
+import { motion } from "framer-motion"
 
 export default function TransportPage() {
   return (
     <main className="flex min-h-screen flex-col">
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/30">
+      <section className="w-full py-16 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Notre Flotte de Véhicules</h1>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Découvrez notre gamme complète de véhicules pour tous vos besoins de transport au Maroc
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
+          >
+            <div className="space-y-2 max-w-3xl">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+                Notre <span className="text-primary">Flotte</span> d'Exception
+              </h1>
+              <p className="text-xl text-muted-foreground md:text-2xl font-light mt-4">
+                Découvrez notre collection de véhicules premium pour tous vos besoins de mobilité au Maroc
               </p>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="mx-auto max-w-5xl mt-12">
+          <div className="mx-auto max-w-6xl mt-16">
             <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="all">Tous</TabsTrigger>
-                <TabsTrigger value="luxury">VIP & Luxe</TabsTrigger>
-                <TabsTrigger value="groups">Groupes</TabsTrigger>
-                <TabsTrigger value="tourism">Tourisme</TabsTrigger>
+              <TabsList className="w-full max-w-md mx-auto grid grid-cols-4 rounded-full p-1 mb-12">
+                <TabsTrigger value="all" className="rounded-full">
+                  Tous
+                </TabsTrigger>
+                <TabsTrigger value="luxury" className="rounded-full">
+                  VIP & Luxe
+                </TabsTrigger>
+                <TabsTrigger value="groups" className="rounded-full">
+                  Groupes
+                </TabsTrigger>
+                <TabsTrigger value="tourism" className="rounded-full">
+                  Tourisme
+                </TabsTrigger>
               </TabsList>
-              <div className="mt-8">
+              <div>
                 <TabsContent value="all">
                   <VehiclesGrid />
                 </TabsContent>

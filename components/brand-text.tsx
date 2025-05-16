@@ -17,10 +17,10 @@ export function BrandText({ className, size = "md", withTagline = false }: Brand
   return (
     <div className={cn("font-bold leading-tight", className)}>
       <span className={cn("inline-block", sizeClasses[size])}>
-        <span className="text-[#2a4b8d] dark:text-[#3a6bbd]">R'</span>
-        <span className="text-[#3e7b3e] dark:text-[#4e9b4e]">Travel</span>
+        <span className="text-[#2a4b8d] dark:text-[#3a6bbd] font-black">R'</span>
+        <span className="ml-1 text-[#3e7b3e] dark:text-[#4e9b4e] font-light tracking-wide">Travel</span>
       </span>
-      {withTagline && <div className="text-xs md:text-sm text-muted-foreground mt-1">Transport Touristique</div>}
+      {withTagline && <div className="text-xs md:text-sm text-muted-foreground mt-1 italic">Transport Touristique</div>}
     </div>
   )
 }

@@ -1,5 +1,8 @@
+"use client"
+
 import { VehicleCard } from "@/components/vehicle-card"
 import { vehicles } from "@/data/vehicles"
+import { motion } from "framer-motion"
 
 interface VehiclesGridProps {
   category?: string
@@ -29,19 +32,32 @@ export function VehiclesGrid({ category, limit }: VehiclesGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {filteredVehicles.map((vehicle) => (
-        <VehicleCard
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+    >
+      {filteredVehicles.map((vehicle, index) => (
+        <motion.div
           key={vehicle.id}
-          id={vehicle.id}
-          name={vehicle.name}
-          type={vehicle.type}
-          description={vehicle.description}
-          pricePerDay={vehicle.pricePerDay}
-          imageUrl={vehicle.imageUrl}
-          features={vehicle.features}
-        />
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+        >
+          <VehicleCard
+            id={vehicle.id}
+            name={vehicle.name}
+            type={vehicle.type}
+            description={vehicle.description}
+            pricePerDay={vehicle.pricePerDay}
+            imageUrl={vehicle.imageUrl}
+            features={vehicle.features}
+          />
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   )
 }

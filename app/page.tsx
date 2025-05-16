@@ -1,9 +1,11 @@
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, Car, Bus, MapPin, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { TestimonialCarousel } from "@/components/testimonial-carousel"
 import { HeroSection } from "@/components/hero-section"
+import { FeaturedVehicles } from "@/components/featured-vehicles"
 
 export default function Home() {
   return (
@@ -22,7 +24,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-8">
-            <Card className="flex flex-col items-center text-center shadow-lg transition-all hover:shadow-xl">
+            <Card className="service-card flex flex-col items-center text-center shadow-lg transition-all hover:shadow-xl">
               <CardHeader>
                 <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 mb-4">
                   <Car className="h-10 w-10 text-primary" />
@@ -31,6 +33,14 @@ export default function Home() {
                 <CardDescription>Véhicules neufs de grandes marques pour courts et longs séjours</CardDescription>
               </CardHeader>
               <CardContent className="flex-1">
+                <div className="relative w-full h-40 mb-4 rounded-md overflow-hidden">
+                  <Image
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mercedes-Benz-Class-E-3-qiaQc7g1zRuHxpIn5NMAO2p84fd7Fv.webp"
+                    alt="Location de voitures"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <p>
                   Notre flotte comprend des véhicules de qualité vous assurant confort et sécurité pendant vos
                   déplacements.
@@ -38,32 +48,42 @@ export default function Home() {
               </CardContent>
               <CardFooter>
                 <Link href="/transport#car-rental">
-                  <Button variant="outline">
-                    En savoir plus <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button variant="outline" className="group">
+                    En savoir plus{" "}
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
               </CardFooter>
             </Card>
-            <Card className="flex flex-col items-center text-center shadow-lg transition-all hover:shadow-xl">
+            <Card className="service-card flex flex-col items-center text-center shadow-lg transition-all hover:shadow-xl">
               <CardHeader>
                 <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 mb-4">
                   <Bus className="h-10 w-10 text-primary" />
                 </div>
-                <CardTitle>Transport Touristique</CardTitle>
+                <CardTitle>Transport VIP</CardTitle>
                 <CardDescription>Services de transport avec chauffeur expérimenté</CardDescription>
               </CardHeader>
               <CardContent className="flex-1">
+                <div className="relative w-full h-40 mb-4 rounded-md overflow-hidden">
+                  <Image
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-12%20at%2013.55.11-J3jq66HgZmBfJuWOb6LqulcRHlNqV2.jpeg"
+                    alt="Transport VIP"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <p>Découvrez le Maroc en toute sérénité grâce à notre équipe professionnelle et dévouée.</p>
               </CardContent>
               <CardFooter>
-                <Link href="/tourist">
-                  <Button variant="outline">
-                    En savoir plus <ArrowRight className="ml-2 h-4 w-4" />
+                <Link href="/transport#vip">
+                  <Button variant="outline" className="group">
+                    En savoir plus{" "}
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
               </CardFooter>
             </Card>
-            <Card className="flex flex-col items-center text-center shadow-lg transition-all hover:shadow-xl">
+            <Card className="service-card flex flex-col items-center text-center shadow-lg transition-all hover:shadow-xl">
               <CardHeader>
                 <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 mb-4">
                   <Calendar className="h-10 w-10 text-primary" />
@@ -72,12 +92,21 @@ export default function Home() {
                 <CardDescription>Solutions de transport sur mesure pour vos événements</CardDescription>
               </CardHeader>
               <CardContent className="flex-1">
+                <div className="relative w-full h-40 mb-4 rounded-md overflow-hidden">
+                  <Image
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-CAR-min-1024x320.jpg-QWJAg6fdVDNLZ6qgcc6eLaa1HFhNYv.webp"
+                    alt="Transport pour événements"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <p>Services personnalisés pour mariages, conférences et autres occasions spéciales.</p>
               </CardContent>
               <CardFooter>
                 <Link href="/transport#events">
-                  <Button variant="outline">
-                    En savoir plus <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button variant="outline" className="group">
+                    En savoir plus{" "}
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
               </CardFooter>
@@ -86,8 +115,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured Vehicles */}
+      <FeaturedVehicles />
+
       {/* Why Choose Us Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/50 dark:bg-muted/10">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -148,7 +180,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/50 dark:bg-muted/10">
+      <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -180,13 +212,13 @@ export default function Home() {
                   Nous contacter
                 </Button>
               </Link>
-              <Link href="/transport#reservation">
+              <Link href="/transport">
                 <Button
                   size="lg"
                   variant="outline"
                   className="bg-primary-foreground text-primary hover:bg-primary-foreground/90"
                 >
-                  Réserver maintenant
+                  Voir notre flotte
                 </Button>
               </Link>
             </div>

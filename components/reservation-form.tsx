@@ -1,294 +1,122 @@
 "use client"
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { CalendarIcon, Users, MapPin } from "lucide-react"
-import { format } from "date-fns"
-import { fr } from "date-fns/locale"
+import type React from "react"
 
-import { cn } from "@/lib/utils"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { createReservation } from "@/app/actions/reservation"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { toast } from "@/components/ui/use-toast"
-
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Le nom doit contenir au moins 2 caractères.",
-  }),
-  email: z.string().email({
-    message: "Veuillez entrer une adresse email valide.",
-  }),
-  phone: z.string().min(8, {
-    message: "Veuillez entrer un numéro de téléphone valide.",
-  }),
-  serviceType: z.string({
-    required_error: "Veuillez sélectionner un type de service.",
-  }),
-  startDate: z.date({
-    required_error: "Veuillez sélectionner une date de début.",
-  }),
-  endDate: z.date({
-    required_error: "Veuillez sélectionner une date de fin.",
-  }),
-  pickupLocation: z.string().min(2, {
-    message: "Veuillez indiquer un lieu de prise en charge.",
-  }),
-  passengers: z.string().optional(),
-  message: z.string().optional(),
-})
+import { Label } from "@/components/ui/label"
+import { CalendarIcon } from "lucide-react"
+import { format } from "date-fns"
+import { fr } from "date-fns/locale"
+import { cn } from "@/lib/utils"
+import { toast } from "@/hooks/use-toast"
 
 interface ReservationFormProps {
-  touristic?: boolean
+  vehicleId: string
+  vehicleName: string
 }
 
-export function ReservationForm({ touristic = false }: ReservationFormProps) {
+export function ReservationForm({ vehicleId, vehicleName }: ReservationFormProps) {
+  const router = useRouter()
+  const [date, setDate] = useState<Date>()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      serviceType: touristic ? "circuit-imperial" : "car-rental",
-      pickupLocation: "",
-      passengers: "",
-      message: "",
-    },
-  })
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!date) {
+      toast({
+        title: "Date requise",
+        description: "Veuillez sélectionner une date pour votre réservation.",
+        variant: "destructive",
+      })
+      return
+    }
+
     setIsSubmitting(true)
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    const formData = new FormData(event.currentTarget)
+    formData.set("vehicleId", vehicleId)
+    formData.set("date", date.toISOString().split("T")[0])
+
+    const result = await createReservation(formData)
 
     setIsSubmitting(false)
 
-    toast({
-      title: "Réservation envoyée!",
-      description: "Nous vous contacterons bientôt pour confirmer votre réservation.",
-    })
-
-    form.reset()
+    if (result.success) {
+      toast({
+        title: "Réservation confirmée",
+        description: result.message,
+      })
+      router.refresh()
+    } else {
+      toast({
+        title: "Erreur de réservation",
+        description: result.message,
+        variant: "destructive",
+      })
+    }
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nom complet</FormLabel>
-                <FormControl>
-                  <Input placeholder="Votre nom" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <div className="bg-card rounded-lg shadow-md p-6">
+      <h3 className="text-xl font-bold mb-4">Réserver {vehicleName}</h3>
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type="email" placeholder="votre@email.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Téléphone</FormLabel>
-                <FormControl>
-                  <Input placeholder="06 XX XX XX XX" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="serviceType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Type de service</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez un service" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {touristic ? (
-                      <>
-                        <SelectItem value="circuit-imperial">Circuit des Villes Impériales</SelectItem>
-                        <SelectItem value="circuit-desert">Aventure dans le Désert</SelectItem>
-                        <SelectItem value="circuit-coastal">Route Atlantique</SelectItem>
-                        <SelectItem value="custom-tour">Circuit personnalisé</SelectItem>
-                      </>
-                    ) : (
-                      <>
-                        <SelectItem value="car-rental">Location de voiture</SelectItem>
-                        <SelectItem value="vip-transport">Transport VIP</SelectItem>
-                        <SelectItem value="event-transport">Transport pour événement</SelectItem>
-                      </>
-                    )}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="startDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Date de début</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
-                      >
-                        {field.value ? format(field.value, "PPP", { locale: fr }) : <span>Sélectionnez une date</span>}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) => date < new Date()}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="endDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Date de fin</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
-                      >
-                        {field.value ? format(field.value, "PPP", { locale: fr }) : <span>Sélectionnez une date</span>}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) => {
-                        const startDate = form.getValues("startDate")
-                        return date < new Date() || (startDate && date < startDate)
-                      }}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="pickupLocation"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Lieu de prise en charge</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input className="pl-10" placeholder="Adresse ou lieu" {...field} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="passengers"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nombre de passagers</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Users className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input className="pl-10" placeholder="Nombre de personnes" {...field} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="date">Date de réservation</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(date, "PPP", { locale: fr }) : "Sélectionner une date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                initialFocus
+                disabled={(date) => date < new Date()}
+              />
+            </PopoverContent>
+          </Popover>
         </div>
 
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Message (optionnel)</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Précisez vos besoins spécifiques ou posez-nous vos questions"
-                  className="min-h-[120px]"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                Partagez toute information supplémentaire qui pourrait nous aider à mieux répondre à vos besoins.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="space-y-2">
+          <Label htmlFor="name">Nom complet</Label>
+          <Input id="name" name="name" required />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" name="email" type="email" required />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="phone">Téléphone</Label>
+          <Input id="phone" name="phone" required />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="message">Message (optionnel)</Label>
+          <Textarea id="message" name="message" rows={3} />
+        </div>
 
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Envoi en cours..." : "Envoyer la demande de réservation"}
+          {isSubmitting ? "Traitement en cours..." : "Réserver maintenant"}
         </Button>
       </form>
-    </Form>
+    </div>
   )
 }

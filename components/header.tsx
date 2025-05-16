@@ -51,7 +51,10 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-xl font-bold">R&apos;TRAVEL</span>
+            <div className="font-bold text-2xl">
+              <span className="text-blue-700 dark:text-blue-500">R'</span>
+              <span className="text-green-700 dark:text-green-500">Travel</span>
+            </div>
           </Link>
         </div>
 

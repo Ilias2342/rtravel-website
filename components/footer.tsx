@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail } from "lucide-react"
+import { BrandText } from "@/components/brand-text"
 
 export function Footer() {
   return (
@@ -7,7 +8,9 @@ export function Footer() {
       <div className="container px-4 md:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <h3 className="text-lg font-bold">R&apos;TRAVEL</h3>
+            <div className="mb-2">
+              <BrandText withTagline />
+            </div>
             <p className="text-sm text-muted-foreground">
               Votre partenaire de confiance pour la location de voitures et le transport touristique au Maroc.
             </p>
@@ -104,7 +107,9 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} R&apos;TRAVEL. Tous droits réservés.</p>
+          <p>
+            &copy; {new Date().getFullYear()} <BrandText className="inline-block" size="sm" />. Tous droits réservés.
+          </p>
           <p className="mt-1">RC:131771 - Patente:27200034 - IF:26046881 - CNSS:5979680 - ICE:001982116000096</p>
         </div>
       </div>

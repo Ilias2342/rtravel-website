@@ -1,127 +1,72 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ChevronLeft, ChevronRight, Star } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { motion, AnimatePresence } from "framer-motion"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa"
 
 const testimonials = [
   {
-    name: "Sophie et Pierre",
-    location: "France",
-    rating: 5,
-    text: "Notre circuit des villes impériales était parfaitement organisé. Le chauffeur était professionnel et connaissait très bien le pays. Nous avons découvert le Maroc dans des conditions idéales!",
+    name: "Sophie Dubois",
+    title: "Directrice Marketing",
+    avatar:
+      "https://images.unsplash.com/photo-1570295999680-0b1e7b092788?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=300&q=60",
+    text: "R'TRAVEL a été un partenaire exceptionnel pour nos événements d'entreprise. Leur professionnalisme et leur flotte de véhicules de luxe ont dépassé nos attentes.",
   },
   {
-    name: "John Smith",
-    location: "États-Unis",
-    rating: 5,
-    text: "L'aventure dans le désert était incroyable! Dormir sous les étoiles dans le Sahara restera l'un de mes meilleurs souvenirs. Le transport était confortable malgré les longues distances.",
+    name: "Ahmed El Amrani",
+    title: "Propriétaire de Restaurant",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd8a72fbc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=300&q=60",
+    text: "Grâce à R'TRAVEL, nos clients peuvent profiter d'un service de transport VIP fiable et confortable. Nous recommandons vivement leurs services.",
   },
   {
-    name: "Maria et Carlos",
-    location: "Espagne",
-    rating: 4,
-    text: "Nous avons loué une voiture pour explorer la côte atlantique à notre rythme. Le véhicule était en parfait état et le service client très réactif. Une expérience à recommander!",
-  },
-  {
-    name: "Ahmed",
-    location: "Maroc",
-    rating: 5,
-    text: "En tant que local, j'ai fait appel à R'TRAVEL pour organiser un événement d'entreprise. Le service était impeccable et tous mes collègues étaient satisfaits. Je recommande vivement!",
+    name: "Isabelle Lefevre",
+    title: "Wedding Planner",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHBlb3BsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=300&q=60",
+    text: "R'TRAVEL a contribué à rendre les mariages que j'organise encore plus spéciaux. Leurs voitures de luxe et leur service impeccable sont un atout précieux.",
   },
 ]
 
 export function TestimonialCarousel() {
-  const [current, setCurrent] = useState(0)
-  const [autoplay, setAutoplay] = useState(true)
-
-  const next = () => {
-    setCurrent((current + 1) % testimonials.length)
-  }
-
-  const prev = () => {
-    setCurrent((current - 1 + testimonials.length) % testimonials.length)
-  }
+  const [currentTestimonial, setCurrentTestimonial] = useState(0)
 
   useEffect(() => {
-    if (!autoplay) return
-
     const interval = setInterval(() => {
-      next()
-    }, 5000)
-
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+    }, 7000)
     return () => clearInterval(interval)
-  }, [current, autoplay])
+  }, [])
+
+  const testimonial = testimonials[currentTestimonial]
 
   return (
     <div className="relative">
-      <div className="overflow-hidden py-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-            className="flex justify-center"
-            onMouseEnter={() => setAutoplay(false)}
-            onMouseLeave={() => setAutoplay(true)}
-          >
-            <Card className="max-w-xl bg-muted/50">
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="font-bold">{testimonials[current].name}</h3>
-                    <p className="text-sm text-muted-foreground">{testimonials[current].location}</p>
-                  </div>
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${i < testimonials[current].rating ? "fill-primary text-primary" : "text-muted"}`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="italic">"{testimonials[current].text}"</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </AnimatePresence>
+      <div className="bg-muted rounded-lg p-8 shadow-md">
+        <div className="flex items-center mb-4">
+          <Avatar className="mr-4 h-12 w-12">
+            <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.name} />
+            <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+          </Avatar>
+          <div>
+            <h4 className="font-semibold">{testimonial.name}</h4>
+            <p className="text-sm text-muted-foreground">{testimonial.title}</p>
+          </div>
+        </div>
+        <div className="relative">
+          <FaQuoteLeft className="absolute left-0 top-0 text-gray-400" size={20} />
+          <p className="text-muted-foreground italic pl-6">{testimonial.text}</p>
+          <FaQuoteRight className="absolute right-0 bottom-0 text-gray-400" size={20} />
+        </div>
       </div>
 
-      <div className="absolute inset-0 flex items-center justify-between pointer-events-none">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm pointer-events-auto"
-          onClick={prev}
-        >
-          <ChevronLeft className="h-4 w-4" />
-          <span className="sr-only">Previous testimonial</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm pointer-events-auto"
-          onClick={next}
-        >
-          <ChevronRight className="h-4 w-4" />
-          <span className="sr-only">Next testimonial</span>
-        </Button>
-      </div>
-
-      <div className="flex justify-center gap-1 mt-4">
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
         {testimonials.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrent(index)}
-            className={`w-2 h-2 rounded-full transition-all ${
-              index === current ? "bg-primary scale-125" : "bg-muted-foreground/30"
+            onClick={() => setCurrentTestimonial(index)}
+            className={`w-3 h-3 rounded-full transition-all ${
+              index === currentTestimonial ? "bg-primary scale-125" : "bg-gray-300"
             }`}
             aria-label={`Go to testimonial ${index + 1}`}
           />

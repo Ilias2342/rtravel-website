@@ -8,27 +8,38 @@ import { motion, AnimatePresence } from "framer-motion"
 
 const slides = [
   {
-    image: "/placeholder.svg?height=800&width=1600",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mercedes-Benz-Class-E-3-qiaQc7g1zRuHxpIn5NMAO2p84fd7Fv.webp",
     title: "Location de Voitures",
     description: "Découvrez notre flotte de véhicules neufs pour tous vos déplacements au Maroc",
     link: "/transport#car-rental",
   },
   {
-    image: "/placeholder.svg?height=800&width=1600",
-    title: "Transport Touristique",
-    description: "Explorez le Maroc avec nos services de transport touristique personnalisés",
-    link: "/tourist",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-12%20at%2013.55.11-J3jq66HgZmBfJuWOb6LqulcRHlNqV2.jpeg",
+    title: "Transport VIP",
+    description: "Voyagez avec style et confort dans nos véhicules de luxe avec chauffeur professionnel",
+    link: "/transport#vip",
   },
   {
-    image: "/placeholder.svg?height=800&width=1600",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-CAR-min-1024x320.jpg-QWJAg6fdVDNLZ6qgcc6eLaa1HFhNYv.webp",
     title: "Événements Spéciaux",
     description: "Des solutions de transport sur mesure pour vos événements importants",
     link: "/transport#events",
+  },
+  {
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Toyota-Land-Cruiser-4x4-4-sXERxatC9xwHJ8sC29o1xFl35Q2Ifl.webp",
+    title: "Aventures Touristiques",
+    description: "Explorez les paysages marocains avec nos véhicules tout-terrain",
+    link: "/tourist",
   },
 ]
 
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [imageError, setImageError] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,7 +49,7 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="relative w-full h-[70vh] min-h-[500px] overflow-hidden">
+    <section className="relative w-full h-[70vh] min-h-[400px] max-h-[800px] overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentSlide}
@@ -49,13 +60,14 @@ export function HeroSection() {
           className="absolute inset-0"
         >
           <Image
-            src={slides[currentSlide].image || "/placeholder.svg"}
+            src={imageError ? "/placeholder.svg?height=800&width=1200" : slides[currentSlide].image}
             alt={slides[currentSlide].title}
             fill
             className="object-cover"
             priority
+            onError={() => setImageError(true)}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
+          <div className="absolute inset-0 bg-black/40" />
         </motion.div>
       </AnimatePresence>
 
@@ -69,18 +81,18 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="max-w-3xl text-white"
           >
-            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
               {slides[currentSlide].title}
             </h1>
-            <p className="mt-4 text-xl text-white/90 max-w-xl">{slides[currentSlide].description}</p>
+            <p className="mt-4 text-xl text-white/90 max-w-xl md:text-2xl">{slides[currentSlide].description}</p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button size="lg" asChild>
+              <Button size="lg" asChild className="btn-hover-effect text-lg px-6 py-6 h-auto">
                 <Link href={slides[currentSlide].link}>En savoir plus</Link>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20"
+                className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 text-lg px-6 py-6 h-auto btn-hover-effect"
                 asChild
               >
                 <Link href="/contact">Nous contacter</Link>

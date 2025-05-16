@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react"
 
+const MOBILE_BREAKPOINT = 768
+
 export function useMobile() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
     }
 
     // Initial check

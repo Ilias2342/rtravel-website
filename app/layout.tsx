@@ -12,6 +12,10 @@ export const metadata = {
   title: "R'TRAVEL - Transport Touristique et Location de Voitures au Maroc",
   description:
     "R'TRAVEL est votre partenaire de confiance pour la location de voitures et le transport touristique au Maroc. Découvrez nos services de qualité et nos offres personnalisées.",
+  icons: {
+    icon: "/images/rtravel-logo.png",
+    apple: "/images/rtravel-logo.png",
+  },
     generator: 'v0.dev'
 }
 
@@ -24,9 +28,9 @@ export default function RootLayout({
     <html lang="fr" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <div className="relative flex min-h-screen flex-col">
+          <div className="relative min-h-screen flex flex-col">
             <Header />
-            <div className="flex-1">{children}</div>
+            <main className="flex-1 w-full">{children}</main>
             <Footer />
           </div>
           <Toaster />

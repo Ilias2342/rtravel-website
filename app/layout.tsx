@@ -7,6 +7,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Toaster } from "@/components/ui/toaster"
 import { GoogleAnalytics } from "@/components/google-analytics"
+import { AnalyticsPageView } from "@/components/analytics-page-view"
 import { Suspense } from "react"
 import { ConsentBanner } from "@/components/consent-banner"
 
@@ -110,6 +111,9 @@ export default function RootLayout({
           </LanguageProvider>
         </ThemeProvider>
         <GoogleAnalytics />
+        <Suspense fallback={null}>
+          <AnalyticsPageView />
+        </Suspense>
       </body>
     </html>
   )

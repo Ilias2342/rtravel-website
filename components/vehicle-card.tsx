@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { Check, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
+import { analytics } from "@/lib/analytics"
 
 interface VehicleCardProps {
   id: string
@@ -23,6 +24,10 @@ export function VehicleCard({ id, name, type, description, pricePerDay, imageUrl
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [imageError, setImageError] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+
+  useEffect(() => {
+    analytics.viewVehicle(id, name)
+  }, [id, name])
 
   return (
     <motion.div
@@ -74,7 +79,7 @@ export function VehicleCard({ id, name, type, description, pricePerDay, imageUrl
         <CardFooter>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="w-full group">
+              <Button className="w-full group" onClick={() => analytics.startReservation(id)}>
                 <span>Réserver</span>
                 <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>

@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail } from "lucide-react"
-import { BrandText } from "@/components/brand-text"
 import { motion } from "framer-motion"
+import { ThemeAwareLogo } from "@/components/theme-aware-logo"
 
 export function Footer() {
   return (
@@ -18,7 +18,7 @@ export function Footer() {
             className="space-y-4"
           >
             <div className="mb-4">
-              <BrandText withTagline size="lg" />
+              <ThemeAwareLogo width={200} height={50} />
             </div>
             <p className="text-sm text-muted-foreground">
               Votre partenaire de confiance pour la location de voitures et le transport touristique au Maroc.
@@ -155,9 +155,7 @@ export function Footer() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-16 pt-8 border-t text-center text-sm text-muted-foreground"
         >
-          <p>
-            &copy; {new Date().getFullYear()} <BrandText className="inline-block" size="sm" />. Tous droits réservés.
-          </p>
+          <p>&copy; {new Date().getFullYear()} R'Travel. Tous droits réservés.</p>
           <p className="mt-2 text-xs opacity-70">
             RC:131771 - Patente:27200034 - IF:26046881 - CNSS:5979680 - ICE:001982116000096
           </p>

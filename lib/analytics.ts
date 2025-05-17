@@ -11,8 +11,8 @@ type EventParams = {
   [key: string]: string | number | boolean | null | undefined
 }
 
-// Votre ID de mesure réel
-const GA_MEASUREMENT_ID = "G-HPB6Y7Y2SR"
+// Update to the correct Measurement ID from your account
+const GA_MEASUREMENT_ID = "G-11231667173"
 
 // Helper to ensure gtag is available
 const isGtagAvailable = (): boolean => {

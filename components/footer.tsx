@@ -88,36 +88,42 @@ export function Footer() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-4"
           >
-            <h3 className="text-lg font-bold">Liens Rapides</h3>
+            <h3 className="text-lg font-bold">Zones de Service</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li>
-                <Link href="/" className="hover:text-primary transition-colors inline-flex items-center">
+                <Link href="/locations/rabat" className="hover:text-primary transition-colors inline-flex items-center">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2"></span>
-                  Accueil
+                  Rabat
                 </Link>
               </li>
               <li>
-                <Link href="/transport" className="hover:text-primary transition-colors inline-flex items-center">
+                <Link
+                  href="/locations/casablanca"
+                  className="hover:text-primary transition-colors inline-flex items-center"
+                >
                   <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2"></span>
-                  Transport
+                  Casablanca
                 </Link>
               </li>
               <li>
-                <Link href="/tourist" className="hover:text-primary transition-colors inline-flex items-center">
+                <Link
+                  href="/locations/marrakech"
+                  className="hover:text-primary transition-colors inline-flex items-center"
+                >
                   <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2"></span>
-                  Tourisme
+                  Marrakech
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-primary transition-colors inline-flex items-center">
+                <Link href="/locations/fes" className="hover:text-primary transition-colors inline-flex items-center">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2"></span>
-                  Contact
+                  Fès
                 </Link>
               </li>
               <li>
-                <Link href="/contact#review" className="hover:text-primary transition-colors inline-flex items-center">
+                <Link href="/locations" className="hover:text-primary transition-colors inline-flex items-center">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2"></span>
-                  Avis clients
+                  Toutes les zones
                 </Link>
               </li>
             </ul>

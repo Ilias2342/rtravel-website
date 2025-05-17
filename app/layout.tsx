@@ -10,13 +10,14 @@ import { GoogleAnalytics } from "@/components/google-analytics"
 import { AnalyticsPageView } from "@/components/analytics-page-view"
 import { Suspense } from "react"
 import { ConsentBanner } from "@/components/consent-banner"
+import { LocalBusinessSEO } from "@/components/local-business-seo"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "R'TRAVEL - Transport Touristique et Location de Voitures au Maroc",
+  title: "R'TRAVEL - Location de Voitures et Transport Touristique au Maroc | Service VIP",
   description:
-    "R'TRAVEL est votre partenaire de confiance pour la location de voitures et le transport touristique au Maroc. Découvrez nos services de qualité et nos offres personnalisées.",
+    "Service premium de location de voitures et transport touristique au Maroc. Flotte de véhicules de luxe, chauffeurs professionnels, excursions personnalisées et transferts aéroport VIP à Rabat et dans tout le Maroc.",
   keywords: [
     "location voiture maroc",
     "transport touristique maroc",
@@ -26,6 +27,12 @@ export const metadata = {
     "location minibus maroc",
     "chauffeur privé maroc",
     "transport événements maroc",
+    "transfert aéroport rabat",
+    "location mercedes maroc",
+    "location voiture luxe maroc",
+    "circuit touristique maroc",
+    "transport mariage maroc",
+    "location 4x4 maroc",
   ],
   authors: [{ name: "R'TRAVEL" }],
   creator: "R'TRAVEL",
@@ -45,9 +52,9 @@ export const metadata = {
     },
   },
   openGraph: {
-    title: "R'TRAVEL - Transport Touristique et Location de Voitures au Maroc",
+    title: "R'TRAVEL - Location de Voitures et Transport Touristique au Maroc | Service VIP",
     description:
-      "R'TRAVEL est votre partenaire de confiance pour la location de voitures et le transport touristique au Maroc. Découvrez nos services de qualité et nos offres personnalisées.",
+      "Service premium de location de voitures et transport touristique au Maroc. Flotte de véhicules de luxe, chauffeurs professionnels, excursions personnalisées et transferts aéroport VIP à Rabat et dans tout le Maroc.",
     url: "https://www.rtravel.ma",
     siteName: "R'TRAVEL",
     images: [
@@ -55,7 +62,7 @@ export const metadata = {
         url: "/images/rtravel-og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "R'TRAVEL - Transport Touristique et Location de Voitures au Maroc",
+        alt: "R'TRAVEL - Location de Voitures et Transport Touristique au Maroc | Service VIP",
       },
     ],
     locale: "fr_FR",
@@ -74,9 +81,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "R'TRAVEL - Transport Touristique et Location de Voitures au Maroc",
+    title: "R'TRAVEL - Location de Voitures et Transport Touristique au Maroc | Service VIP",
     description:
-      "R'TRAVEL est votre partenaire de confiance pour la location de voitures et le transport touristique au Maroc. Découvrez nos services de qualité et nos offres personnalisées.",
+      "Service premium de location de voitures et transport touristique au Maroc. Flotte de véhicules de luxe, chauffeurs professionnels, excursions personnalisées et transferts aéroport VIP à Rabat et dans tout le Maroc.",
     creator: "@rtravel",
     images: ["/images/rtravel-og-image.jpg"],
   },
@@ -108,6 +115,7 @@ export default function RootLayout({
               <Toaster />
             </Suspense>
             <ConsentBanner />
+            <LocalBusinessSEO />
           </LanguageProvider>
         </ThemeProvider>
         <GoogleAnalytics />

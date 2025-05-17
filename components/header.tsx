@@ -45,6 +45,8 @@ export function Header() {
         { href: "/", label: "Accueil", active: pathname === "/" },
         { href: "/transport", label: "Transport", active: pathname === "/transport" },
         { href: "/tourist", label: "Tourisme", active: pathname === "/tourist" },
+        { href: "/locations", label: "Zones de Service", active: pathname.startsWith("/locations") },
+        { href: "/blog", label: "Blog", active: pathname.startsWith("/blog") },
         { href: "/contact", label: "Contact", active: pathname === "/contact" },
       ]
     } else if (language === "en") {
@@ -52,6 +54,8 @@ export function Header() {
         { href: "/", label: "Home", active: pathname === "/" },
         { href: "/transport", label: "Transport", active: pathname === "/transport" },
         { href: "/tourist", label: "Tourism", active: pathname === "/tourist" },
+        { href: "/locations", label: "Service Areas", active: pathname.startsWith("/locations") },
+        { href: "/blog", label: "Blog", active: pathname.startsWith("/blog") },
         { href: "/contact", label: "Contact", active: pathname === "/contact" },
       ]
     } else if (language === "ar") {
@@ -59,6 +63,8 @@ export function Header() {
         { href: "/", label: "الرئيسية", active: pathname === "/" },
         { href: "/transport", label: "النقل", active: pathname === "/transport" },
         { href: "/tourist", label: "السياحة", active: pathname === "/tourist" },
+        { href: "/locations", label: "مناطق الخدمة", active: pathname.startsWith("/locations") },
+        { href: "/blog", label: "المدونة", active: pathname.startsWith("/blog") },
         { href: "/contact", label: "اتصل بنا", active: pathname === "/contact" },
       ]
     }
@@ -68,6 +74,8 @@ export function Header() {
       { href: "/", label: "Accueil", active: pathname === "/" },
       { href: "/transport", label: "Transport", active: pathname === "/transport" },
       { href: "/tourist", label: "Tourisme", active: pathname === "/tourist" },
+      { href: "/locations", label: "Zones de Service", active: pathname.startsWith("/locations") },
+      { href: "/blog", label: "Blog", active: pathname.startsWith("/blog") },
       { href: "/contact", label: "Contact", active: pathname === "/contact" },
     ]
   }

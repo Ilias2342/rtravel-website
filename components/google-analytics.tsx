@@ -2,8 +2,8 @@
 
 import Script from "next/script"
 
-// Your actual measurement ID
-const GA_MEASUREMENT_ID = "G-HPB6Y7Y2SR"
+// Update to the correct Measurement ID from your account
+const GA_MEASUREMENT_ID = "G-11231667173"
 
 export function GoogleAnalytics() {
   return (
